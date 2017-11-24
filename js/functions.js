@@ -31,13 +31,24 @@ function writeProfessorData(pid, pemail, pname, pdept) {
 }
 
 // Registration page
-function createNewStudent(email, password, name, major, ) {
+function createNewStudent(email, password, name, major, gpa, year) {
 	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
 	});
-	writeStudentData('sid', email, )
+	var sid = Math.floor(Math.random() * 9000000) + 1000000;
+	writeStudentData(sid, email, name, major, gpa, year);
+}
+
+function createNewProfessor(email, password, name, department) {
+	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+	});
+	var pid = Math.floor(Math.random() * 9000000) + 1000000;
+	writeProfessorData(pid, email, name, department);
 }
 
 // Login page
@@ -46,6 +57,16 @@ function signInExistingUser(email, password) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
+	});
+}
+
+function signOutUser() {
+	firebase.auth().signOut().then(function() {
+		// Sign-out successful.
+		// Redirect to login or main page.
+		window.location = 'login.html';
+	}).catch(function(error) {
+		// An error happened.
 	});
 }
 
@@ -61,7 +82,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var providerData = user.providerData;
 	} else {
 		// User is signed out.
+		window.location = 'login.html';
 	}
-	console.log('accessing user info...');
-	console.log(user);
 });
