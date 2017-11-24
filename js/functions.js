@@ -31,10 +31,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var isAnonymous = user.isAnonymous;
 		var uid = user.uid;
 		var providerData = user.providerData;
-		// ...
 	} else {
 		// User is signed out.
-		// ...
 	}
+	console.log('accessing user info...');
 	console.log(user);
 });
