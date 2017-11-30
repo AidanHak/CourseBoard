@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Register - NYIT CourseBoard</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">CourseBoard Registration Form</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form" method="post" action="login.html?registered">
@@ -98,18 +98,16 @@
 			var retryReason = window.location.href.split('?retry=')[1];
 			switch(retryReason) {
 				case "shortpw":
-					error('Your password needs a minimum of ' + minPassword + ' characters.')
+					errorMsg('Your password needs a minimum of ' + minPassword + ' characters.')
 					break;
 				case "nomatch":
-					error('Your password did not match.')
+					errorMsg('Your password did not match.')
 					break;
 				default:
-					error('Something went wrong. Please try again.');
+					errorMsg('Something went wrong. Please try again.');
 			}
 		}
-		function error(txt) {
-			$('form').before('<div style="color:red; font-weight:bold;">' + txt + '</div>');
-		}
+
 		$('form button').click(function(e) {
 			e.preventDefault();
 			var $form = $(this).closest('form');
@@ -117,12 +115,20 @@
 				if ($form.find('input[name="password"]').val().length >= minPassword) {
 					$form.submit();
 				} else {
-					window.location = window.location.href.split('?')[0] + '?retry=shortpw'
+					retry('shortpw');
 				}
 			} else {
-				window.location = window.location.href.split('?')[0] + '?retry=nomatch'
+				retry('nomatch');
 			}
 		});
+
+		function errorMsg(txt) {
+			$('form').before('<div style="color:red; font-weight:bold;">' + txt + '</div>');
+		}
+
+		function retry(reason) {
+			window.location = window.location.href.split('?')[0] + '?retry=' + reason
+		}
 	</script>
 
 </body>
