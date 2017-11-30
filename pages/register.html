@@ -112,7 +112,7 @@
 		}
 		$('form button').click(function(e) {
 			e.preventDefault();
-			var $form = $(this);
+			var $form = $(this).closest('form');
 			if ($form.find('input[name="password"]').val() === $form.find('input[name="confirmpassword"]').val()) {
 				if ($form.find('input[name="password"]').val().length < minPassword) {
 					$form.submit();
