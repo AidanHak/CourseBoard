@@ -66,7 +66,7 @@ function signOutUser() {
 	firebase.auth().signOut().then(function() {
 		// Sign-out successful.
 		// Redirect to login or main page.
-		window.location = 'login.html';
+		window.location = 'login.html?logged_out';
 	}).catch(function(error) {
 		// An error happened.
 	});
@@ -84,13 +84,13 @@ function checkUser() {
 			var uid = user.uid;
 			var providerData = user.providerData;
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-				//window.location = 'index.html';
+				window.location = 'index.html?logged_in';
 			}
 			alert('Hello ' + displayName + '!');
 			console.log(user);
 		} else {
 			// User is signed out.
-			window.location = 'login.html';
+			window.location = 'login.html?not_logged_in';
 		}
 	});
 }
