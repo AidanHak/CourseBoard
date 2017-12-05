@@ -42,7 +42,7 @@
                         <h3 class="panel-title">CourseBoard Registration Form</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="post" action="login.html?registered">
+                        <form role="form" method="post" action="register.html">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="First Name" name="firstname" type="text" autofocus>
@@ -79,7 +79,8 @@
 
     <!-- Custom Theme JavaScript -->
 	<script src="../dist/js/sb-admin-2.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
     <script>
       // Initialize Firebase
       var config = {
@@ -92,6 +93,7 @@
       };
       firebase.initializeApp(config);
     </script>
+    <script src="../js/functions.js"></script>
 	<script>
 		var minPassword = 8;
 		if (window.location.href.indexOf('?retry=') !== -1) {
@@ -108,12 +110,15 @@
 			}
 		}
 
-		$('form button').click(function(e) {
+		$('form').submit(function(e) {
 			e.preventDefault();
-			var $form = $(this).closest('form');
+			var $form = $(this);
 			if ($form.find('input[name="password"]').val() === $form.find('input[name="confirmpassword"]').val() && $.trim($form.find('input[name="password"]').val()) !== '') {
 				if ($form.find('input[name="password"]').val().length >= minPassword) {
-					$form.submit();
+                    createNewStudent($form.find('input[name="email"]').val(), $form.find('input[name="password"]').val(), $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val(), function() {
+                        $form.attr('action', 'register.html?registered');
+					    $form.submit();
+                    })
 				} else {
 					retry('shortpw');
 				}
