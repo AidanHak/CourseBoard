@@ -86,7 +86,7 @@ function checkUser() {
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
 				window.location = 'index.html';
 			}
-			alert('Hello ' displayName + '!');
+			alert('Hello ' + displayName + '!');
 			console.log(user);
 		} else {
 			// User is signed out.
