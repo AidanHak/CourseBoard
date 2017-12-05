@@ -84,6 +84,7 @@ function checkUser() {
 			var uid = user.uid;
 			var providerData = user.providerData;
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
+				console.log('try to access login/register when already logged in, send to index');
 				window.location = 'index.html?logged_in';
 			}
 			alert('Hello ' + displayName + '!');
