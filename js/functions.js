@@ -1,3 +1,5 @@
+var displayName;
+
 function writeStudentData(sid, semail, sname, smajor, gpa, year) {
 	firebase.database().ref('students/' + sid).set({
 		sid: sid,
@@ -73,7 +75,7 @@ function signOutUser() {
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		// User is signed in.
-		var displayName = user.displayName;
+		displayName = user.displayName;
 		var email = user.email;
 		var emailVerified = user.emailVerified;
 		var photoURL = user.photoURL;
@@ -84,6 +86,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			window.location = 'index.html';
 		}
 		alert('Hello ' displayName + '!');
+		console.log(user);
 	} else {
 		// User is signed out.
 		window.location = 'login.html';
