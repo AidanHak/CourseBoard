@@ -96,4 +96,4 @@ function checkUser() {
 	});
 }
 
-checkUser();
+//checkUser();
