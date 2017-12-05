@@ -72,23 +72,27 @@ function signOutUser() {
 	});
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-	if (user) {
-		// User is signed in.
-		displayName = user.displayName;
-		var email = user.email;
-		var emailVerified = user.emailVerified;
-		var photoURL = user.photoURL;
-		var isAnonymous = user.isAnonymous;
-		var uid = user.uid;
-		var providerData = user.providerData;
-		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-			window.location = 'index.html';
+function checkUser() {
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			// User is signed in.
+			displayName = user.displayName;
+			var email = user.email;
+			var emailVerified = user.emailVerified;
+			var photoURL = user.photoURL;
+			var isAnonymous = user.isAnonymous;
+			var uid = user.uid;
+			var providerData = user.providerData;
+			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
+				window.location = 'index.html';
+			}
+			alert('Hello ' displayName + '!');
+			console.log(user);
+		} else {
+			// User is signed out.
+			window.location = 'login.html';
 		}
-		alert('Hello ' displayName + '!');
-		console.log(user);
-	} else {
-		// User is signed out.
-		window.location = 'login.html';
-	}
-});
+	});
+}
+
+checkUser();
