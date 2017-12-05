@@ -84,7 +84,7 @@ function checkUser() {
 			var uid = user.uid;
 			var providerData = user.providerData;
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-				window.location = 'index.html';
+				//window.location = 'index.html';
 			}
 			alert('Hello ' + displayName + '!');
 			console.log(user);
