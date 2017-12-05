@@ -33,14 +33,15 @@ function writeProfessorData(pid, pemail, pname, pdept) {
 }
 
 // Registration page
-function createNewStudent(email, password, name, major, gpa, year) {
+function createNewStudent(email, password, name, callback) {
 	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
 	});
 	var sid = Math.floor(Math.random() * 9000000) + 1000000;
-	writeStudentData(sid, email, name, major, gpa, year);
+	writeStudentData(sid, email, name, '', '', '');
+	callback();
 }
 
 function createNewProfessor(email, password, name, department) {
