@@ -118,7 +118,7 @@
                     createNewStudent($form.find('input[name="email"]').val(), $form.find('input[name="password"]').val(), $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val(), function() {
                         $form.attr('action', 'register.html?registered');
 					    $form.submit();
-                    })
+                    });
 				} else {
 					retry('shortpw');
 				}

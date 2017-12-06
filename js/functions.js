@@ -90,7 +90,7 @@ function checkUser() {
 				window.location = 'index.html?logged_in';
 			}
 			alert('Hello ' + user.displayName + '!');
-			console.log(user);
+			console.log($user);
 		} else {
 			// User is signed out.
 			window.location = 'login.html?not_logged_in';
