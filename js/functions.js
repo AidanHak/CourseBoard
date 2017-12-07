@@ -1,4 +1,4 @@
-$user;
+var $user = firebase.auth().currentUser;
 
 function writeStudentData(sid, semail, sname, smajor, gpa, year) {
 	firebase.database().ref('students/' + sid).set({
@@ -41,10 +41,13 @@ function createNewStudent(email, password, name, callback) {
 	});
 	var sid = Math.floor(Math.random() * 9000000) + 1000000;
 	writeStudentData(sid, email, name, '', '', '');
+	updateName(name);
+	sendEmailVerification();
 	callback();
 }
 
-function createNewProfessor(email, password, name, department) {
+// Professor will not be created by registering, only from backend/DB
+/*function createNewProfessor(email, password, name, department) {
 	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
@@ -52,7 +55,7 @@ function createNewProfessor(email, password, name, department) {
 	});
 	var pid = Math.floor(Math.random() * 9000000) + 1000000;
 	writeProfessorData(pid, email, name, department);
-}
+}*/
 
 // Login page
 function signInExistingUser(email, password) {
@@ -95,6 +98,34 @@ function checkUser() {
 			// User is signed out.
 			window.location = 'login.html?not_logged_in';
 		}
+	});
+}
+
+function sendEmailVerification() {
+	$user.sendEmailVerification().then(function() {
+		// Email sent.
+	}).catch(function(error) {
+		// An error happened.
+	});
+}
+
+function sendPasswordReset(emailAddress) {
+	var auth = firebase.auth();
+
+	auth.sendPasswordResetEmail(emailAddress).then(function() {
+		// Email sent.
+	}).catch(function(error) {
+		// An error happened.
+	});
+}
+
+function updateName($name) {
+	user.updateProfile({
+		displayName: $name
+	}).then(function() {
+		// Update successful.
+	}).catch(function(error) {
+		// An error happened.
 	});
 }
 
