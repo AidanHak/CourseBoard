@@ -1,11 +1,9 @@
-function isLoggedIn() {
+function initialCheck() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			// User is signed in and currentUser will no longer return null.
-			console.log('is logged in is true');
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-				console.log('try to access login/register when already logged in, send to index');
-				//window.location.href = 'index.html?logged_in';
+				window.location.href = 'index.html?logged_in';
 			}
 
 			if (!user.emailVerified) {
@@ -17,7 +15,7 @@ function isLoggedIn() {
 			}
 		} else {
 			// No user is signed in.
-			console.log('is not logged in')
+			console.log('is not logged in');
 			if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
 				console.log('trying to access a page that isn\'t the login or register page, send to login');
 				//window.location.href = 'login.html?not_logged_in';
@@ -91,6 +89,11 @@ function signInExistingUser(email, password) {
 		alert(errorCode + ': ' + errorMessage);
 	});
 }
+
+$('#signout').click(function(e) {
+	e.preventDefault();
+	signOutUser();
+});
 
 function signOutUser() {
 	firebase.auth().signOut().then(function() {
