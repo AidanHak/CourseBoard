@@ -75,24 +75,9 @@ function signOutUser() {
 }
 
 function checkUser() {
+	initialCheck();
 	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			// User is signed in.
-			var displayName = user.displayName;
-			var email = user.email;
-			var emailVerified = user.emailVerified;
-			var photoURL = user.photoURL;
-			var isAnonymous = user.isAnonymous;
-			var uid = user.uid;
-			var providerData = user.providerData;
-			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-				console.log('try to access login/register when already logged in, send to index');
-				window.location = 'index.html?logged_in';
-			}
-		} else {
-			// User is signed out.
-			window.location = 'login.html?not_logged_in';
-		}
+		initialCheck();
 	});
 }
 
@@ -125,4 +110,33 @@ function updateName($name) {
 	});
 }
 
-//checkUser();
+function getName() {
+	return firebase.auth().currentUser.displayName;
+}
+
+function getEmail() {
+	return firebase.auth().currentUser.email;
+}
+
+function isVerified() {
+	return firebase.auth().currentUser.emailVerified;
+}
+
+function initialCheck() {
+	if (isLoggedIn()) {
+		// User is signed in.
+		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
+			console.log('try to access login/register when already logged in, send to index');
+			window.location = 'index.html?logged_in';
+		}
+	} else {
+		// User is signed out.
+		window.location = 'login.html?not_logged_in';
+	}
+}
+
+function isLoggedIn() {
+	return firebase.auth().currentUser !== null;
+}
+
+checkUser();
