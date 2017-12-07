@@ -1,5 +1,3 @@
-var $user = firebase.auth().currentUser;
-
 function writeStudentData(sid, semail, sname, smajor, gpa, year) {
 	firebase.database().ref('students/' + sid).set({
 		sid: sid,
@@ -80,7 +78,6 @@ function checkUser() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			// User is signed in.
-			$user = user;
 			var displayName = user.displayName;
 			var email = user.email;
 			var emailVerified = user.emailVerified;
@@ -92,8 +89,6 @@ function checkUser() {
 				console.log('try to access login/register when already logged in, send to index');
 				window.location = 'index.html?logged_in';
 			}
-			alert('Hello ' + user.displayName + '!');
-			console.log($user);
 		} else {
 			// User is signed out.
 			window.location = 'login.html?not_logged_in';
@@ -102,7 +97,7 @@ function checkUser() {
 }
 
 function sendEmailVerification() {
-	$user.sendEmailVerification().then(function() {
+	firebase.auth().currentUser.sendEmailVerification().then(function() {
 		// Email sent.
 	}).catch(function(error) {
 		// An error happened.
@@ -120,7 +115,7 @@ function sendPasswordReset(emailAddress) {
 }
 
 function updateName($name) {
-	$user.updateProfile({
+	firebase.auth().currentUser.updateProfile({
 		displayName: $name
 	}).then(function() {
 		// Update successful.
