@@ -17,10 +17,8 @@ function initialCheck() {
 			}
 		} else {
 			// No user is signed in.
-			console.log('is not logged in');
 			if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
-				console.log('trying to access a page that isn\'t the login or register page, send to login');
-				//window.location.href = 'login.html?not_logged_in';
+				window.location.href = 'login.html?not_logged_in';
 			}
 		}
 	});
