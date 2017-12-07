@@ -64,6 +64,9 @@ function signInExistingUser(email, password) {
 		var errorMessage = error.message;
 		alert(errorCode + ': ' + errorMessage);
 	});
+	if (isLoggedIn()) {
+		window.location = 'index.html';
+	}
 }
 
 function signOutUser() {
@@ -120,7 +123,6 @@ function isVerified() {
 function initialCheck() {
 	if (isLoggedIn()) {
 		// User is signed in.
-		//if (firebase.auth().currentUser.displayName)
 		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
 			console.log('try to access login/register when already logged in, send to index');
 			window.location = 'index.html?logged_in';

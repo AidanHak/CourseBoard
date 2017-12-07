@@ -97,7 +97,6 @@
         $('form').submit(function(e) {
             e.preventDefault();
             $form = $(this);
-            console.log($form.find('input[name="email"]').val());
             signInExistingUser($form.find('input[name="email"]').val(), $form.find('input[name="password"]').val());
         });
     </script>
