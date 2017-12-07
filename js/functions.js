@@ -65,7 +65,7 @@ function signInExistingUser(email, password) {
 		alert(errorCode + ': ' + errorMessage);
 	});
 	if (isLoggedIn()) {
-		window.location = 'index.html';
+		window.location.href = 'index.html';
 	}
 }
 
@@ -73,7 +73,7 @@ function signOutUser() {
 	firebase.auth().signOut().then(function() {
 		// Sign-out successful.
 		// Redirect to login or main page.
-		window.location = 'login.html?logged_out';
+		window.location.href = 'login.html?logged_out';
 	}).catch(function(error) {
 		// An error happened.
 	});
@@ -123,15 +123,18 @@ function isVerified() {
 function initialCheck() {
 	if (isLoggedIn()) {
 		// User is signed in.
-		//console.log('is logged in is true');
+		console.log('is logged in is true');
 		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-			//console.log('try to access login/register when already logged in, send to index');
-			window.location = 'index.html?logged_in';
+			console.log('try to access login/register when already logged in, send to index');
+			//window.location.href = 'index.html?logged_in';
 		}
-	} else if(!isLoggedIn() && location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
+	} else {
 		// User is signed out.
-		//console.log('is not logged in');
-		window.location = 'login.html?not_logged_in';
+		console.log('is not logged in')
+		if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
+			console.log('trying to access a page that isn\'t the login or register page, send to login');
+			//window.location.href = 'login.html?not_logged_in';
+		}
 	}
 }
 
