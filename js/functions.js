@@ -36,6 +36,7 @@ function createNewStudent(email, password, name, callback) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
+		alert(errorCode + ': ' + errorMessage);
 	});
 	var sid = Math.floor(Math.random() * 9000000) + 1000000;
 	writeStudentData(sid, email, name, '', '', '');
@@ -61,6 +62,7 @@ function signInExistingUser(email, password) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
+		alert(errorCode + ': ' + errorMessage);
 	});
 }
 
@@ -71,13 +73,6 @@ function signOutUser() {
 		window.location = 'login.html?logged_out';
 	}).catch(function(error) {
 		// An error happened.
-	});
-}
-
-function checkUser() {
-	initialCheck();
-	firebase.auth().onAuthStateChanged(function(user) {
-		initialCheck();
 	});
 }
 
@@ -125,6 +120,7 @@ function isVerified() {
 function initialCheck() {
 	if (isLoggedIn()) {
 		// User is signed in.
+		//if (firebase.auth().currentUser.displayName)
 		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
 			console.log('try to access login/register when already logged in, send to index');
 			window.location = 'index.html?logged_in';
@@ -139,4 +135,4 @@ function isLoggedIn() {
 	return firebase.auth().currentUser !== null;
 }
 
-checkUser();
+initialCheck();
