@@ -129,7 +129,7 @@ function initialCheck() {
 			console.log('try to access login/register when already logged in, send to index');
 			window.location = 'index.html?logged_in';
 		}
-	} else if(location.href.indexOf('login.html') === -1 || location.href.indexOf('register.html') === -1) {
+	} else if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
 		// User is signed out.
 		window.location = 'login.html?not_logged_in';
 	}
