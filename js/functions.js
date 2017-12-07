@@ -4,6 +4,8 @@ function initialCheck() {
 			// User is signed in and currentUser will no longer return null.
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
 				window.location.href = 'index.html?logged_in';
+			} else if (location.href.indexOf('profile.html') !== -1) {
+				$('h1.page-header').append(' ' + getName() + '!');
 			}
 
 			if (!user.emailVerified) {
