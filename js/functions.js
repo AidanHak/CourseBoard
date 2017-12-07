@@ -1,5 +1,13 @@
 function isLoggedIn() {
-	return firebase.auth().currentUser !== null;
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			// User is signed in and currentUser will no longer return null.
+			return true;
+		} else {
+			// No user is signed in.
+			return false;
+		}
+	});
 }
 
 function writeStudentData(sid, semail, sname, smajor, gpa, year) {
