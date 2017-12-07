@@ -2,10 +2,26 @@ function isLoggedIn() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
 			// User is signed in and currentUser will no longer return null.
-			return true;
+			console.log('is logged in is true');
+			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
+				console.log('try to access login/register when already logged in, send to index');
+				//window.location.href = 'index.html?logged_in';
+			}
+
+			if (!user.emailVerified) {
+				sendEmailVerification();
+			}
+
+			if (user.displayName === null) {
+				updateName(prompt('What is your name?'));
+			}
 		} else {
 			// No user is signed in.
-			return false;
+			console.log('is not logged in')
+			if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
+				console.log('trying to access a page that isn\'t the login or register page, send to login');
+				//window.location.href = 'login.html?not_logged_in';
+			}
 		}
 	});
 }
@@ -52,8 +68,6 @@ function createNewStudent(email, password, name, callback) {
 	});
 	var sid = Math.floor(Math.random() * 9000000) + 1000000;
 	writeStudentData(sid, email, name, '', '', '');
-	updateName(name);
-	sendEmailVerification();
 	callback();
 }
 
@@ -76,9 +90,6 @@ function signInExistingUser(email, password) {
 		var errorMessage = error.message;
 		alert(errorCode + ': ' + errorMessage);
 	});
-	if (isLoggedIn()) {
-		window.location.href = 'index.html';
-	}
 }
 
 function signOutUser() {
@@ -94,16 +105,16 @@ function signOutUser() {
 function sendEmailVerification() {
 	firebase.auth().currentUser.sendEmailVerification().then(function() {
 		// Email sent.
+		alert('Verification email has been sent.');
 	}).catch(function(error) {
 		// An error happened.
 	});
 }
 
 function sendPasswordReset(emailAddress) {
-	var auth = firebase.auth();
-
-	auth.sendPasswordResetEmail(emailAddress).then(function() {
+	firebase.auth().sendPasswordResetEmail(emailAddress).then(function() {
 		// Email sent.
+		alert('Password reset email has been sent.');
 	}).catch(function(error) {
 		// An error happened.
 	});
@@ -130,24 +141,6 @@ function getEmail() {
 
 function isVerified() {
 	return firebase.auth().currentUser.emailVerified;
-}
-
-function initialCheck() {
-	if (isLoggedIn()) {
-		// User is signed in.
-		console.log('is logged in is true');
-		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-			console.log('try to access login/register when already logged in, send to index');
-			//window.location.href = 'index.html?logged_in';
-		}
-	} else {
-		// User is signed out.
-		console.log('is not logged in')
-		if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
-			console.log('trying to access a page that isn\'t the login or register page, send to login');
-			//window.location.href = 'login.html?not_logged_in';
-		}
-	}
 }
 
 initialCheck();
