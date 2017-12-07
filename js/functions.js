@@ -1,3 +1,7 @@
+function isLoggedIn() {
+	return firebase.auth().currentUser !== null;
+}
+
 function writeStudentData(sid, semail, sname, smajor, gpa, year) {
 	firebase.database().ref('students/' + sid).set({
 		sid: sid,
@@ -136,10 +140,6 @@ function initialCheck() {
 			//window.location.href = 'login.html?not_logged_in';
 		}
 	}
-}
-
-function isLoggedIn() {
-	return firebase.auth().currentUser !== null;
 }
 
 initialCheck();
