@@ -139,4 +139,4 @@ function isLoggedIn() {
 	return firebase.auth().currentUser !== null;
 }
 
-checkUser();
+//checkUser();
