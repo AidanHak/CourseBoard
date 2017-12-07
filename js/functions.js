@@ -120,7 +120,7 @@ function sendPasswordReset(emailAddress) {
 }
 
 function updateName($name) {
-	user.updateProfile({
+	$user.updateProfile({
 		displayName: $name
 	}).then(function() {
 		// Update successful.
