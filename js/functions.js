@@ -123,12 +123,14 @@ function isVerified() {
 function initialCheck() {
 	if (isLoggedIn()) {
 		// User is signed in.
+		//console.log('is logged in is true');
 		if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
-			console.log('try to access login/register when already logged in, send to index');
+			//console.log('try to access login/register when already logged in, send to index');
 			window.location = 'index.html?logged_in';
 		}
-	} else if(location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
+	} else if(!isLoggedIn() && location.href.indexOf('login.html') === -1 && location.href.indexOf('register.html') === -1) {
 		// User is signed out.
+		//console.log('is not logged in');
 		window.location = 'login.html?not_logged_in';
 	}
 }
