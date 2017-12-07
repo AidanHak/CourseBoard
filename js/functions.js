@@ -1,3 +1,15 @@
+initialCheck();
+
+$('#forgotpw').click(function(e) {
+	e.preventDefault();
+	sendPasswordReset(firebase.auth().currentUser.email);
+});
+
+$('#signout').click(function(e) {
+	e.preventDefault();
+	signOutUser();
+});
+
 function initialCheck() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
@@ -57,16 +69,15 @@ function writeProfessorData(pid, pemail, pname, pdept) {
 }
 
 // Registration page
-function createNewStudent(email, password, name, callback) {
+function createNewStudent(email, password, name) {
 	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
-		alert(errorCode + ': ' + errorMessage);
+		alert(errorMessage);
 	});
 	var sid = Math.floor(Math.random() * 9000000) + 1000000;
 	writeStudentData(sid, email, name, '', '', '');
-	callback();
 }
 
 // Professor will not be created by registering, only from backend/DB
@@ -86,14 +97,9 @@ function signInExistingUser(email, password) {
 		// Handle Errors here.
 		var errorCode = error.code;
 		var errorMessage = error.message;
-		alert(errorCode + ': ' + errorMessage);
+		alert(errorMessage);
 	});
 }
-
-$('#signout').click(function(e) {
-	e.preventDefault();
-	signOutUser();
-});
 
 function signOutUser() {
 	firebase.auth().signOut().then(function() {
@@ -128,22 +134,12 @@ function updateName($name) {
 		displayName: $name
 	}).then(function() {
 		// Update successful.
-		alert('Your name has successfully been changed to ' + $name);
+		alert('Your name has successfully been changed to ' + $name + '!');
 	}).catch(function(error) {
 		// An error happened.
 	});
 }
 
-function getName() {
-	return firebase.auth().currentUser.displayName;
-}
-
 function getEmail() {
 	return firebase.auth().currentUser.email;
 }
-
-function isVerified() {
-	return firebase.auth().currentUser.emailVerified;
-}
-
-initialCheck();

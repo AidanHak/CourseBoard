@@ -114,13 +114,13 @@
 
 		$('form').submit(function(e) {
 			e.preventDefault();
-			var $form = $(this);
-			if ($form.find('input[name="password"]').val() === $form.find('input[name="confirmpassword"]').val() && $.trim($form.find('input[name="password"]').val()) !== '') {
-				if ($form.find('input[name="password"]').val().length >= minPassword) {
-                    createNewStudent($form.find('input[name="email"]').val(), $form.find('input[name="password"]').val(), $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val(), function() {
-                        $form.attr('action', 'register.html?registered');
-					    $form.submit();
-                    });
+            var $form = $(this);
+            var $email = $form.find('input[name="email"]').val();
+            var $name = $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val();
+            var $pw = $form.find('input[name="password"]').val();
+			if ($pw === $form.find('input[name="confirmpassword"]').val() && $.trim($pw) !== '') {
+				if ($pw.length >= minPassword) {
+                    createNewStudent($email, $pw, $name);
 				} else {
 					retry('shortpw');
 				}
@@ -130,7 +130,7 @@
 		});
 
 		function errorMsg(txt) {
-			$('form').before('<div style="color:red; font-weight:bold;">' + txt + '</div>');
+			$('form').before('<div class="alert alert-danger">' + txt + '</div>');
 		}
 
 		function retry(reason) {
