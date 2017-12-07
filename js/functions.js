@@ -119,6 +119,7 @@ function updateName($name) {
 		displayName: $name
 	}).then(function() {
 		// Update successful.
+		alert('Your name has successfully been changed to ' + $name);
 	}).catch(function(error) {
 		// An error happened.
 	});
