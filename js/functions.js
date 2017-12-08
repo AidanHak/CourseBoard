@@ -37,9 +37,8 @@ function initialCheck() {
 }
 
 function retrieveFrom(path, callback) {
-	var $data;
 	firebase.database().ref(path).once('value', function(snap) {
-		callback($data);
+		callback(snap.val());
 	});
 }
 
