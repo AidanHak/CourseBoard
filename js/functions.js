@@ -36,12 +36,11 @@ function initialCheck() {
 	});
 }
 
-function retrieveDB(path) {
+function retrieveFrom(path, callback) {
 	var $data;
-	firebase.database().ref(path).once('value', function(snap){
-		$data = snap.val();
+	firebase.database().ref(path).once('value', function(snap) {
+		callback($data);
 	});
-	return $data;
 }
 
 /*
