@@ -40,10 +40,10 @@ function initialCheck() {
  ** Helper function to:
  ** createNewStudent
  */
-function writeStudentData(semail, sname) {
+function writeStudentData() {
 	firebase.database().ref('students/' + getUID()).set({
-		email: semail,
-		name: sname
+		email: firebase.auth().currentUser.email,
+		name: firebase.auth().currentUser.displayName
 	});
 }
 
