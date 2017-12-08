@@ -36,6 +36,14 @@ function initialCheck() {
 	});
 }
 
+function retrieveDB(path) {
+	var $data;
+	firebase.database().ref(path).once('value', function(snap){
+		$data = snap.val();
+	});
+	return $data;
+}
+
 /*
  ** Helper function to:
  ** createNewStudent
@@ -62,7 +70,7 @@ function createNewStudent(email, password, name) {
 		var errorMessage = error.message;
 		alert(errorMessage);
 	});
-	writeStudentData(email, name);
+	writeStudentData();
 }
 
 /*
