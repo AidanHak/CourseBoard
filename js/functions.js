@@ -41,27 +41,32 @@ function initialCheck() {
  ** Helper function to:
  ** dbResult
  */
-function retrieveFrom(path, callback) {
+function retrieveFrom(path, callback, after) {
 	firebase.database().ref(path).once('value', function(snap) {
 		callback(snap.val());
+	}).then(function() {
+		after();
 	});
 }
 
-function dbResult(path, result) {
+function dbResult(path, result, after) {
 	retrieveFrom(path, function(data) {
 		$.each(data, function (index, item) {
 			result(index, item);
 		});
+	}, function() {
+		after();
 	});
 }
 
 function getCourses() {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
 		$('li#courses ul').append('<li><a href="courses.html?cid='+key+'">' + key + '</li>');
+	}, function() {
+		if ($('li#courses ul li').length > 0) {
+			$('li#courses > a').append('<span class="fa arrow"></span>');
+		}
 	});
-	if ($('li#courses ul li').length > 0) {
-		$('li#courses > a').append('<span class="fa arrow"></span>');
-	}
 }
 /*dbResult('/students/', function(index, item) {
 
