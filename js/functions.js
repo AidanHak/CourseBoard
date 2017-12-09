@@ -95,14 +95,40 @@ function getStudentCourseInfo(cid) {
 
 function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
-		if (cid === '') {
-			cid = key;
-			key = value;
+		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
-		console.log('key: ');
-		console.log(key);
-		console.log('value: ');
-		console.log(value);
+
+		if (key === 'title') {
+			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
+			if (location.href.indexOf('cid=') !== -1) {
+				$('h1.page-header').text(value);
+			} else {
+				$('h1.page-header').text('All Courses');
+			}
+		} else if (key === 'location') {
+			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
+		} else if (key === 'days') {
+			var $days = '';
+			$.each(value, function(data) {
+				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
+			});
+			$days = $days.substring(0, $days.length - 2);
+			$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
+		} else if (key === 'description') {
+			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
+		}
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
+/*
+ ** Helper function to:
+ ** getAllCourses
+ */
+function getAllCoursesInfo() {
+	dbResult('/courses/', function(key, value) {
 		/*if ($('#allcourses-table tbody tr.' + cid).length === 0) {
 			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
@@ -126,17 +152,15 @@ function getCourseInfo(cid) {
 		} else if (key === 'description') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
 		}*/
+		console.log('key:');
+		console.log(key);
+		console.log('');
+		console.log('');
+		console.log('value:');
+		console.log(value);
 	}, function() {
 		// Callback to retrieving DB data
 	});
-}
-
-/*
- ** Helper function to:
- ** getAllCourses
- */
-function getAllCoursesInfo() {
-	getCourseInfo('');
 }
 
 /*
