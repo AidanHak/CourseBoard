@@ -19,7 +19,7 @@ function initialCheck() {
 			} else if (location.href.indexOf('profile.html') !== -1) {
 				$('h1.page-header').append(' ' + getName() + '!');
 			}
-			getCourses(getCourseNames);
+			getCourses();
 
 			if (!user.emailVerified) {
 				sendEmailVerification();
@@ -59,23 +59,21 @@ function dbResult(path, result, after) {
 	});
 }
 
-function getCourses(courseName) {
+function getCourses() {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
-		$('li#courses ul').append('<li><a href="courses.html?cid='+key+'">' + key + '</li>');
+		$('li#courses ul').append('<li><a href="courses.html?cid='+key+'">' + getCourseName(key) + '</li>');
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
-			courseName();
+			//courseName();
 		}
 	});
 }
 
-function getCourseNames() {
-	dbResult('/courses/', function(key, value) {
+function getCourseName(cid) {
+	dbResult('/courses/' + cid + '/', function(key, value) {
 		console.log(key);
 		console.log(value);
-	}, function() {
-
 	});
 }
 /*dbResult('/students/', function(index, item) {
