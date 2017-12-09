@@ -62,7 +62,7 @@ function dbResult(path, result, after) {
 function getCourses() {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
 		$('li#courses ul').append('<li class="' + key + '"><a href="courses.html?cid=' + key + '">' + key + '</li>');
-		getCourseName(key);
+		getCourseInfo(key);
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
@@ -71,10 +71,18 @@ function getCourses() {
 	});
 }
 
-function getCourseName(cid) {
+function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
+		$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		if (key === 'title') {
 			$('li.' + cid + ' a').html(value);
+			$('tr.' + cid + ' td.ctitle').text(value);
+		} else if (key === 'location') {
+			$('tr.' + cid + ' td.cloc').text(value);
+		} else if (key === 'days') {
+			$('tr.' + cid + ' td.cdays').text(value);
+		} else if (key === 'cdesc') {
+			$('tr.' + cid + ' td.cdesc').text(value);
 		}
 	}, function() {
 		// Callback to retrieving DB data
