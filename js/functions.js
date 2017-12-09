@@ -72,8 +72,8 @@ function getCourses() {
 
 function getCourseName(cid) {
 	dbResult('/courses/' + cid + '/', function(key, value) {
-		console.log(key);
-		console.log(value);
+		console.log('key: ' + key);
+		console.log('value: ' + value);
 	});
 }
 /*dbResult('/students/', function(index, item) {
