@@ -129,35 +129,32 @@ function getCourseInfo(cid) {
  */
 function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
-		/*if ($('#allcourses-table tbody tr.' + cid).length === 0) {
+		var cid = key;
+		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
 			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
 
-		if (key === 'title') {
-			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
-			if (location.href.indexOf('cid=') !== -1) {
-				$('h1.page-header').text(value);
-			} else {
-				$('h1.page-header').text('All Courses');
+		$.each(value, function(courseAttr, val) {
+			if (courseAttr === 'title') {
+				$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + val + '</a>');
+				if (location.href.indexOf('cid=') !== -1) {
+					$('h1.page-header').text(val);
+				} else {
+					$('h1.page-header').text('All Courses');
+				}
+			} else if (courseAttr === 'location') {
+				$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(val);
+			} else if (courseAttr === 'days') {
+				var $days = '';
+				$.each(val, function(data) {
+					$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
+				});
+				$days = $days.substring(0, $days.length - 2);
+				$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
+			} else if (courseAttr === 'description') {
+				$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(val);
 			}
-		} else if (key === 'location') {
-			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
-		} else if (key === 'days') {
-			var $days = '';
-			$.each(value, function(data) {
-				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
-			});
-			$days = $days.substring(0, $days.length - 2);
-			$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
-		} else if (key === 'description') {
-			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
-		}*/
-		console.log('key:');
-		console.log(key);
-		console.log('');
-		console.log('');
-		console.log('value:');
-		console.log(value);
+		});
 	}, function() {
 		// Callback to retrieving DB data
 	});
