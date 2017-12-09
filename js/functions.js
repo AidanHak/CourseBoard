@@ -83,12 +83,12 @@ function getCourseInfo(cid) {
 		} else if (key === 'location') {
 			$('tr.' + cid + ' td.cloc').text(value);
 		} else if (key === 'days') {
-			console.log(value);
 			var $days = '';
 			$.each(value, function(data) {
 				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
 			});
-			$('tr.' + cid + ' td.cdays').append($days.substring(0, $days.length - 2));
+			$days = $days.substring(0, $days.length - 2);
+			$('tr.' + cid + ' td.cdays').append($days);
 		} else if (key === 'description') {
 			$('tr.' + cid + ' td.cdesc').text(value);
 		}
