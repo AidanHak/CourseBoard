@@ -36,11 +36,26 @@ function initialCheck() {
 	});
 }
 
+/*
+ ** Helper function to:
+ ** dbResult
+ */
 function retrieveFrom(path, callback) {
 	firebase.database().ref(path).once('value', function(snap) {
 		callback(snap.val());
 	});
 }
+
+function dbResult(path, result) {
+	retrieveFrom(path, function(data) {
+		$.each(data, function (index, item) {
+			result(index, item);
+		});
+	});
+}
+/*dbResult('/students/', function(index, item) {
+
+});*/
 
 /*
  ** Helper function to:
