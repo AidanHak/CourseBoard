@@ -12,8 +12,8 @@ $('#signout').click(function(e) {
 
 $('#allcourses-table tbody td.join_course button').click(function(e) {
 	e.preventDefault();
+	console.log($(this).closest('tr').attr('class'));
 	joinCourse($(this).closest('tr').attr('class'));
-	$(this).remove();
 });
 
 function initialCheck() {
@@ -169,6 +169,15 @@ function joinCourse(cid) {
 	var updates = {};
 	updates['/courses/' + cid + '/students/' + uid] = true;
 	updates['/students/' + uid + '/courses/' + cid] = true;
+	console.log('updating...');
+	firebase.database().ref().update(updates);
+	console.log('done...');
+}
+
+function createAssignment(cid, aid) {
+	var updates = {};
+	updates['courses/' + cid + '/assignments/' + aid] = true;
+	updates['assignments/' + aid + '/courses/' + cid] = true;
 	firebase.database().ref().update(updates);
 }
 
