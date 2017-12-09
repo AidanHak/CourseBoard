@@ -66,6 +66,7 @@ function getStudentCourses() {
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
+			$('li#courses > a').html($('li#courses > a').html().replace('Courses', 'Your Courses'));
 			$('li#courses ul').prepend('<li><a href="courses.html">All Courses</a></li>');
 		}
 	});
@@ -127,7 +128,8 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+			isStudentTakingCourse(cid);
 		}
 
 		$.each(value, function(courseAttr, val) {
@@ -147,6 +149,21 @@ function getAllCoursesInfo() {
 				$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(val);
 			}
 		});
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
+/*
+ ** Helper function to:
+ ** getAllCoursesInfo
+ */
+function isStudentTakingCourse(cid) {
+	var uid = getUID();
+	dbResult('/courses/' + cid + '/students/', function(key, value) {
+		if (key === uid) {
+			$('#allcourses-table tbody tr.' + cid + ' td.join_course button').remove();
+		}
 	}, function() {
 		// Callback to retrieving DB data
 	});
