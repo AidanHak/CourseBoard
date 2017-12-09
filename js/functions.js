@@ -19,7 +19,7 @@ function initialCheck() {
 			} else if (location.href.indexOf('profile.html') !== -1) {
 				$('h1.page-header').append(' ' + getName() + '!');
 			}
-			getCourses();
+			getStudentCourses();
 
 			if (!user.emailVerified) {
 				sendEmailVerification();
@@ -59,10 +59,10 @@ function dbResult(path, result, after) {
 	});
 }
 
-function getCourses() {
+function getStudentCourses() {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
 		$('li#courses ul').append('<li class="' + key + '"><a href="courses.html?cid=' + key + '">' + key + '</li>');
-		getCourseInfo(key);
+		getStudentCourseInfo(key);
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
@@ -71,17 +71,40 @@ function getCourses() {
 	});
 }
 
+function getAllCourses() {
+	dbResult('/courses/', function(key, value) {
+		getAllCoursesInfo();
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
+/*
+ ** Helper function to:
+ ** getStudentCourses
+ */
+function getStudentCourseInfo(cid) {
+	dbResult('/courses/' + cid, function(key, value) {
+		if (key === 'title') {
+			$('#side-menu #courses ul li.' + cid + ' a').html(value);
+		}
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
 function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
 
 		if (key === 'title') {
-			$('#side-menu #courses ul li.' + cid + ' a').html(value);
 			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
 			if (location.href.indexOf('cid=') !== -1) {
 				$('h1.page-header').text(value);
+			} else {
+				$('h1.page-header').text('All Courses');
 			}
 		} else if (key === 'location') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
@@ -99,11 +122,14 @@ function getCourseInfo(cid) {
 		// Callback to retrieving DB data
 	});
 }
-/*dbResult('/students/', function(index, item) {
 
-}, function(){
-	//if you want to do something after the above function executes
-});*/
+/*
+ ** Helper function to:
+ ** getAllCourses
+ */
+function getAllCoursesInfo() {
+	getCourseInfo('');
+}
 
 /*
  ** Helper function to:
