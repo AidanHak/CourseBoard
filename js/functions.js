@@ -88,7 +88,7 @@ function getCourseInfo(cid) {
 			$.each(value, function(data) {
 				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
 			});
-			$('tr.' + cid + ' td.cdays').append($days);
+			$('tr.' + cid + ' td.cdays').append($days.substring(0, $days.length - 2));
 		} else if (key === 'description') {
 			$('tr.' + cid + ' td.cdesc').text(value);
 		}
