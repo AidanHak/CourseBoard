@@ -11,7 +11,7 @@ $('#signout').click(function(e) {
 });
 
 $('#allcourses-table tbody td.join_course button').click(function(e) {
-	e.preventDefault();
+	//e.preventDefault();
 	console.log($(this).closest('tr').attr('class'));
 	joinCourse($(this).closest('tr').attr('class'));
 });
