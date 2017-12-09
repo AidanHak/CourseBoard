@@ -97,7 +97,7 @@ function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
 		console.log('key: ' + key);
 		console.log('value: ' + value);
-		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
+		/*if ($('#allcourses-table tbody tr.' + cid).length === 0) {
 			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
 
@@ -119,7 +119,7 @@ function getCourseInfo(cid) {
 			$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
 		} else if (key === 'description') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
-		}
+		}*/
 	}, function() {
 		// Callback to retrieving DB data
 	});
