@@ -381,7 +381,7 @@
 	<script>
 	if (location.href.indexOf('cid=') !== -1) {
 		var cid = location.href.split('cid=')[1].split('&')[0];
-		$('#side-menu #courses').after('<li id="course_options"><a href="course.html?cid=' + cid + '"><i class="fa fa-th-gear fa-fw"></i> Course Options</a><ul class="nav nav-second-level collapse in"><li><a href="assignments.html?cid=' + cid + '">Assignments</a></li></ul></li>');
+		$('#side-menu #courses').after('<li id="course_options" class="active"><a href="course.html?cid=' + cid + '"><i class="fa fa-gear fa-fw"></i> Course Options<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse in"><li><a href="courses.html?cid=' + cid + '&page=info"><i class="fa fa-info-circle fa-fw"></i> Course Info</a></li><li><a href="assignments.html?cid=' + cid + '">Assignments</a></li></ul></li>');
 	}
 	</script>
 
