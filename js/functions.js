@@ -10,6 +10,12 @@ $('#signout').click(function(e) {
 	signOutUser();
 });
 
+$('#allcourses-table tbody td.join_course button').click(function(e) {
+	e.preventDefault();
+	joinCourse($(this).closest('tr').attr('class'));
+	$(this).remove();
+});
+
 function initialCheck() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
@@ -128,7 +134,7 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 			isStudentTakingCourse(cid);
 		}
 
@@ -147,11 +153,23 @@ function getAllCoursesInfo() {
 				$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
 			} else if (courseAttr === 'description') {
 				$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(val);
+			} else if (courseAttr === 'endTime') {
+				$('#allcourses-table tbody tr.' + cid + ' td.endtime').text(val);
+			} else if (courseAttr === 'startTime') {
+				$('#allcourses-table tbody tr.' + cid + ' td.starttime').text(val);
 			}
 		});
 	}, function() {
 		// Callback to retrieving DB data
 	});
+}
+
+function joinCourse(cid) {
+	var uid = getUID();
+	var updates = {};
+	updates['/courses/' + cid + 'students/' + uid] = true;
+	updates['/students/' + uid + '/courses/' + cid] = true;
+	firebase.database().ref().update(updates);
 }
 
 /*
