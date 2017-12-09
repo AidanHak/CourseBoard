@@ -73,15 +73,19 @@ function getCourses() {
 
 function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
-		$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+		if ($('tr.' + cid).length === 0) {
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+		}
+
 		if (key === 'title') {
 			$('li.' + cid + ' a').html(value);
 			$('tr.' + cid + ' td.ctitle').text(value);
 		} else if (key === 'location') {
 			$('tr.' + cid + ' td.cloc').text(value);
 		} else if (key === 'days') {
+			console.log(value);
 			$('tr.' + cid + ' td.cdays').text(value);
-		} else if (key === 'cdesc') {
+		} else if (key === 'description') {
 			$('tr.' + cid + ' td.cdesc').text(value);
 		}
 	}, function() {
