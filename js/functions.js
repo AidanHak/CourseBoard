@@ -134,7 +134,7 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
 			isStudentTakingCourse(cid);
 		}
 
