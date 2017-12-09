@@ -133,7 +133,7 @@ function getCourseInfo(cid) {
 
 function getAnnouncements(cid) {
 	var arr = {};
-	dbResult('/courses/' + cid + '/announcements/'), function(key, value) {
+	dbResult('/courses/' + cid + '/announcements/', function(key, value) {
 		arr[key] = true;
 	}, function() {
 		// Callback to retrieving DB data
