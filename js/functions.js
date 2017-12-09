@@ -71,13 +71,21 @@ function getCourses() {
 }
 
 function getCourseName(cid) {
+	$title = 'abc';
 	dbResult('/courses/' + cid + '/', function(key, value) {
-		console.log('key: ' + key);
-		console.log('value: ' + value);
+		if (key === 'title') {
+			console.log(value);
+			$title = value;
+			return value;
+		}
+	}, function() {
+		return $title;
 	});
 }
 /*dbResult('/students/', function(index, item) {
 
+}, function(){
+	//if you want to do something after the above function executes
 });*/
 
 /*
