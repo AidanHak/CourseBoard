@@ -59,27 +59,23 @@ function dbResult(path, result, after) {
 	});
 }
 
-function getCourses() {
+function getCourses(courseTitle) {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
-		$('li#courses ul').append('<li><a href="courses.html?cid='+key+'">' + getCourseName(key) + '</li>');
+		$('li#courses ul').append('<li class="' + key + '"><a href="courses.html?cid=' + key + '">' + getCourseName(key) + '</li>');
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
-			//courseName();
+			courseTitle();
 		}
 	});
 }
 
 function getCourseName(cid) {
-	$title = 'abc';
-	dbResult('/courses/' + cid + '/', function(key, value) {
-		if (key === 'title') {
-			console.log(value);
-			$title = value;
-			return value;
-		}
+	dbResult('/courses/' + cid + '/title', function(key, value) {
+		$('li.' + cid + ' a').html(value);
 	}, function() {
-		return $title;
+console.log(key);
+console.log('aaa');
 	});
 }
 /*dbResult('/students/', function(index, item) {
