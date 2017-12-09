@@ -56,8 +56,8 @@ function dbResult(path, result) {
 }
 
 function getCourses() {
-	dbResult('/students/' + getUID() + '/courses/', function(index, item) {
-		$('li#courses ul').append(item);
+	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
+		$('li#courses ul').append('<li><a href="courses.html?cid='+key+'">' + key + '</li>');
 	});
 	if ($('li#courses ul li').length > 0) {
 		$('li#courses > a').append('<span class="fa arrow"></span>');
