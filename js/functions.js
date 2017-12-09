@@ -10,10 +10,10 @@ $('#signout').click(function(e) {
 	signOutUser();
 });
 
-$('#allcourses-table tbody td.join_course button').click(function(e) {
-	//e.preventDefault();
-	console.log($(this).closest('tr').attr('class'));
+$(document).on('click', '#allcourses-table tbody td.join_course button', function(e) {
+	e.preventDefault();
 	joinCourse($(this).closest('tr').attr('class'));
+	$(this).remove();
 });
 
 function initialCheck() {
