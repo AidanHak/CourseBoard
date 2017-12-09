@@ -97,45 +97,45 @@
     </script>
     <script src="../js/functions.js"></script>
 	<script>
-		var minPassword = 8;
-		if (window.location.href.indexOf('?retry=') !== -1) {
-			var retryReason = window.location.href.split('?retry=')[1];
-			switch(retryReason) {
-				case "shortpw":
-					errorMsg('Your password needs a minimum of ' + minPassword + ' characters.')
-					break;
-				case "nomatch":
-					errorMsg('Your password did not match.')
-					break;
-				default:
-					errorMsg('Something went wrong. Please try again.');
-			}
-		}
+    var minPassword = 8;
+    if (window.location.href.indexOf('?retry=') !== -1) {
+        var retryReason = window.location.href.split('?retry=')[1];
+        switch(retryReason) {
+            case "shortpw":
+                errorMsg('Your password needs a minimum of ' + minPassword + ' characters.')
+                break;
+            case "nomatch":
+                errorMsg('Your password did not match.')
+                break;
+            default:
+                errorMsg('Something went wrong. Please try again.');
+        }
+    }
 
-		$('form').submit(function(e) {
-			e.preventDefault();
-            var $form = $(this);
-            var $email = $form.find('input[name="email"]').val();
-            var $name = $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val();
-            var $pw = $form.find('input[name="password"]').val();
-			if ($pw === $form.find('input[name="confirmpassword"]').val() && $.trim($pw) !== '') {
-				if ($pw.length >= minPassword) {
-                    createNewStudent($email, $pw, $name);
-				} else {
-					retry('shortpw');
-				}
-			} else {
-				retry('nomatch');
-			}
-		});
+    $('form').submit(function(e) {
+        e.preventDefault();
+        var $form = $(this);
+        var $email = $form.find('input[name="email"]').val();
+        var $name = $form.find('input[name="firstname"]').val() + ' ' + $form.find('input[name="lastname"]').val();
+        var $pw = $form.find('input[name="password"]').val();
+        if ($pw === $form.find('input[name="confirmpassword"]').val() && $.trim($pw) !== '') {
+            if ($pw.length >= minPassword) {
+                createNewStudent($email, $pw, $name);
+            } else {
+                retry('shortpw');
+            }
+        } else {
+            retry('nomatch');
+        }
+    });
 
-		function errorMsg(txt) {
-			$('form').before('<div class="alert alert-danger">' + txt + '</div>');
-		}
+    function errorMsg(txt) {
+        $('form').before('<div class="alert alert-danger">' + txt + '</div>');
+    }
 
-		function retry(reason) {
-			window.location = window.location.href.split('?')[0] + '?retry=' + reason
-		}
+    function retry(reason) {
+        window.location = window.location.href.split('?')[0] + '?retry=' + reason
+    }
 	</script>
 
 </body>

@@ -377,7 +377,13 @@
       };
       firebase.initializeApp(config);
     </script>
-    <script src="../js/functions.js"></script>
+	<script src="../js/functions.js"></script>
+	<script>
+	if (location.href.indexOf('cid=') !== -1) {
+		var cid = location.href.split('cid=')[1].split('&')[0];
+		$('#side-menu #courses').after('<li id="course_options"><a href="course.html?cid=' + cid + '"><i class="fa fa-th-gear fa-fw"></i> Course Options</a><ul class="nav nav-second-level collapse in"><li><a href="assignments.html?cid=' + cid + '">Assignments</a></li></ul></li>');
+	}
+	</script>
 
 </body>
 
