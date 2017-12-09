@@ -167,7 +167,7 @@ function getAllCoursesInfo() {
 function joinCourse(cid) {
 	var uid = getUID();
 	var updates = {};
-	updates['/courses/' + cid + 'students/' + uid] = true;
+	updates['/courses/' + cid + '/students/' + uid] = true;
 	updates['/students/' + uid + '/courses/' + cid] = true;
 	firebase.database().ref().update(updates);
 }
