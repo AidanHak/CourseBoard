@@ -66,6 +66,7 @@ function getCourses() {
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
+			$('li#courses ul li').prepend('<a href="courses.html">All Courses</a>');
 		}
 	});
 }
