@@ -59,13 +59,13 @@ function dbResult(path, result, after) {
 	});
 }
 
-function getCourses(courseTitle) {
+function getCourses() {
 	dbResult('/students/' + getUID() + '/courses/', function(key, value) {
-		$('li#courses ul').append('<li class="' + key + '"><a href="courses.html?cid=' + key + '">' + getCourseName(key) + '</li>');
+		$('li#courses ul').append('<li class="' + key + '"><a href="courses.html?cid=' + key + '">' + key + '</li>');
+		getCourseName(key);
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
-			courseTitle();
 		}
 	});
 }
@@ -74,8 +74,8 @@ function getCourseName(cid) {
 	dbResult('/courses/' + cid + '/title', function(key, value) {
 		$('li.' + cid + ' a').html(value);
 	}, function() {
-console.log(key);
-console.log('aaa');
+		console.log(key);
+		console.log('aaa');
 	});
 }
 /*dbResult('/students/', function(index, item) {
