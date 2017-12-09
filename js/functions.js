@@ -71,11 +71,12 @@ function getCourses() {
 }
 
 function getCourseName(cid) {
-	dbResult('/courses/' + cid + '/title', function(key, value) {
-		$('li.' + cid + ' a').html(value);
+	dbResult('/courses/' + cid, function(key, value) {
+		if (key === 'title') {
+			$('li.' + cid + ' a').html(value);
+		}
 	}, function() {
-		console.log(key);
-		console.log('aaa');
+		// Callback to retrieving DB data
 	});
 }
 /*dbResult('/students/', function(index, item) {
