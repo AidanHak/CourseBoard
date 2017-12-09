@@ -102,7 +102,12 @@ function getStudentCourseInfo(cid) {
 
 function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
-		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
+		if (!isStudentTakingCourse(cid)) {
+			if (prompt('Would you like to join this course?')) {
+				joinCourse(cid);
+			}
+		}
+/*		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
 			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}
 
@@ -120,9 +125,19 @@ function getCourseInfo(cid) {
 			$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
 		} else if (key === 'description') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
-		}
+		}*/
 	}, function() {
 		// Callback to retrieving DB data
+	});
+}
+
+function getAnnouncements(cid) {
+	var arr = {};
+	dbResult('/courses/' + cid + '/announcements/'), function(key, value) {
+		arr[key] = true;
+	}, function() {
+		// Callback to retrieving DB data
+		console.log(arr);
 	});
 }
 
@@ -169,9 +184,7 @@ function joinCourse(cid) {
 	var updates = {};
 	updates['/courses/' + cid + '/students/' + uid] = true;
 	updates['/students/' + uid + '/courses/' + cid] = true;
-	console.log('updating...');
 	firebase.database().ref().update(updates);
-	console.log('done...');
 }
 
 function createAssignment(cid, aid) {
