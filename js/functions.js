@@ -101,11 +101,7 @@ function getCourseInfo(cid) {
 
 		if (key === 'title') {
 			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
-			if (location.href.indexOf('cid=') !== -1) {
-				$('h1.page-header').text(value);
-			} else {
-				$('h1.page-header').text('All Courses');
-			}
+			$('h1.page-header').text(value);
 		} else if (key === 'location') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
 		} else if (key === 'days') {
@@ -137,11 +133,7 @@ function getAllCoursesInfo() {
 		$.each(value, function(courseAttr, val) {
 			if (courseAttr === 'title') {
 				$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + val + '</a>');
-				if (location.href.indexOf('cid=') !== -1) {
-					$('h1.page-header').text(val);
-				} else {
-					$('h1.page-header').text('All Courses');
-				}
+				$('h1.page-header').text('All Courses');
 			} else if (courseAttr === 'location') {
 				$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(val);
 			} else if (courseAttr === 'days') {
