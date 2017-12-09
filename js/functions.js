@@ -80,6 +80,9 @@ function getCourseInfo(cid) {
 		if (key === 'title') {
 			$('#side-menu #courses ul li.' + cid + ' a').html(value);
 			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
+			if (location.href.indexOf('cid=') !== -1) {
+				$('h1.page-header').text(value);
+			}
 		} else if (key === 'location') {
 			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
 		} else if (key === 'days') {
