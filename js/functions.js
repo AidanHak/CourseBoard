@@ -19,6 +19,7 @@ function initialCheck() {
 			} else if (location.href.indexOf('profile.html') !== -1) {
 				$('h1.page-header').append(' ' + getName() + '!');
 			}
+			getCourses();
 
 			if (!user.emailVerified) {
 				sendEmailVerification();
@@ -52,6 +53,15 @@ function dbResult(path, result) {
 			result(index, item);
 		});
 	});
+}
+
+function getCourses() {
+	dbResult('/students/' + getUID() + '/courses/', function(index, item) {
+		$('li#courses ul').append(item);
+	});
+	if ($('li#courses ul li').length > 0) {
+		$('li#courses > a').append('<span class="fa arrow"></span>');
+	}
 }
 /*dbResult('/students/', function(index, item) {
 
