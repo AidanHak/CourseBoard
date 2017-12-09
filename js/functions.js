@@ -78,19 +78,19 @@ function getCourseInfo(cid) {
 		}
 
 		if (key === 'title') {
-			$('li.' + cid + ' a').html(value);
-			$('tr.' + cid + ' td.ctitle').text(value);
+			$('#side-menu #courses ul li.' + cid + ' a').html(value);
+			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
 		} else if (key === 'location') {
-			$('tr.' + cid + ' td.cloc').text(value);
+			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
 		} else if (key === 'days') {
 			var $days = '';
 			$.each(value, function(data) {
 				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
 			});
 			$days = $days.substring(0, $days.length - 2);
-			$('tr.' + cid + ' td.cdays').append($days);
+			$('#allcourses-table tbody tr.' + cid + ' td.cdays').append($days);
 		} else if (key === 'description') {
-			$('tr.' + cid + ' td.cdesc').text(value);
+			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
 		}
 	}, function() {
 		// Callback to retrieving DB data
