@@ -64,7 +64,7 @@ function retrieveFrom(path, callback, after) {
 }
 
 function retrieveFromSorted(path, sortBy, callback, after) {
-	firebase.database().ref(path).orderByChild(sortBy).once('value', function(snap) {
+	firebase.database().ref(path).orderByChild(sortBy).once('child_added', function(snap) {
 		callback(snap.val());
 	}).then(function() {
 		after();
@@ -148,6 +148,7 @@ function getAnnouncements(cid) {
 		announcements.sort(function(a, b) {
 			return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text());
 		});
+		console.log(announcements);
 		$('#page-wrapper').append(announcements.get().reverse());
 	});
 }
