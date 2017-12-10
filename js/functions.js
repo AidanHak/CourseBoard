@@ -127,12 +127,18 @@ function getCourseInfo(cid) {
 }
 
 function getAnnouncements(cid) {
-	var arr = {};
+	var anouncements = {};
 	dbResult('/courses/' + cid + '/announcements/', function(key, value) {
-		arr[key] = true;
+		anouncements[key] = true;
 	}, function() {
 		// Callback to retrieving DB data
-		console.log(arr);
+		$.each(announcements, function(key, value) {
+			dbResult('/announcements/' + key, function(key, value) {
+
+			}, function() {
+
+			});
+		});
 	});
 }
 
