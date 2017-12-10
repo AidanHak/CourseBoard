@@ -404,3 +404,15 @@ function getName() {
 function getUID() {
 	return firebase.auth().currentUser.uid;
 }
+
+function updateName(newName) {
+	var user = firebase.auth().currentUser;
+
+	user.updateProfile({
+		displayName: newName
+	}).then(function() {
+		// Update successful
+	}).catch(function() {
+		// An error happened.
+	});
+}
