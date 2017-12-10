@@ -149,8 +149,10 @@ function getOneAssignment(aid, cid) {
 	$('h1.page-header').text('Assignments');
 	dbResult('/assignments/', function(key, value) {
 		if (aid === key) {
-			console.log(value['students']);
-			var content = value['students'][getUID()];
+			var content = undefined;
+			if(value['students'] !== undefined) {
+				content = value['students'][getUID()];
+			}
 			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-primary"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '<br /><br /><form id="assignment_form"><textarea class="form-control" rows="5"></textarea><br /><button type="button" class="btn btn-default">Submit</button></form></div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 			if (content !== undefined) {
 				$('#assignment_form textarea').val(content);
