@@ -139,11 +139,17 @@ function getAssignments(cid) {
 	});
 }
 
-function getOneAssignment(aid, cid) {
+function getOneAssignment(aid, cid, uid) {
+	$('h1.page-header').text('Assignments');
 	dbResult('/assignments/', function(key, value) {
 		if (aid === key) {
 			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '<br /><form id="assignment_form"><textarea class="form-control" rows="5"></textarea><button type="button" class="btn btn-default">Submit</button></form></div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
-			console.log(value);
+			var content = value['students'][uid];
+			if (content !== undefined) {
+				$('#assignment_form textarea').prop('disabled', true);
+			} else {
+				$('#assignment_form textarea').val(content);
+			}
 		}
 	}, function() {
 		// Callback to retrieving DB data

@@ -188,7 +188,7 @@
             } else if (page === 'assignments') {
                 if (location.href.indexOf('aid=') !== -1) {
                     var aid = location.href.split('aid=')[1].split('&')[0];
-                    getOneAssignment(aid, cid);
+                    getOneAssignment(aid, cid, uid);
                 } else {
                     getAssignments(cid);
                 }
