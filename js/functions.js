@@ -140,24 +140,13 @@ function getAnnouncements(cid) {
 	$('h1.page-header').text('Announcements');
 	dbResultSorted('/announcements/', 'submittedDate', function(key, value) {
 		if (value['course'] === cid) {
-			$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
+			$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br /><span style="font-size:smaller;">Submitted on <span class="announcement_date">' + new Date(value['submittedDate'] * 1000) + '</span></span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
 		}
-		/*dbResult('/courses/' + value['course'] + '/announcements/', function(key2, value2) {
-			if (key === key2) {
-				$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
-			}
-		}, function() {
-			var announcements = $('#page-wrapper div.announcement').detach();
-			announcements.sort(function(a, b) {
-				return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text())
-			});
-			$('#page-wrapper').append(announcements.get().reverse());
-		});*/
 	}, function() {
 		// Callback to retrieving DB data
 		var announcements = $('#page-wrapper div.announcement').detach();
 		announcements.sort(function(a, b) {
-			return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text())
+			return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text());
 		});
 		$('#page-wrapper').append(announcements.get().reverse());
 	});
