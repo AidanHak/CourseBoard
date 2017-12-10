@@ -185,6 +185,8 @@
             $('#allcourses-row').hide();
 			if (page === 'announcements') {
                 getAnnouncements(cid);
+            } else if (page === 'assignments') {
+                getAssignments(cid);
             }
 		} else {
 			window.location.href = 'courses.html?cid=' + cid + '&page=announcements';
