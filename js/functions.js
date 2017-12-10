@@ -102,11 +102,6 @@ function getStudentCourseInfo(cid) {
 
 function getCourseInfo(cid) {
 	dbResult('/courses/' + cid, function(key, value) {
-		if (!isStudentTakingCourse(cid)) {
-			if (prompt('Would you like to join this course?')) {
-				joinCourse(cid);
-			}
-		}
 /*		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
 			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
 		}

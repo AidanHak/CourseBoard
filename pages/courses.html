@@ -375,7 +375,7 @@
 		getCourseInfo(cid);
 		if (location.href.indexOf('page=') !== -1) {
 			var page = location.href.split('page=')[1].split('&')[0];
-
+			getAnnouncements(cid);
 		} else {
 			window.location.href = 'courses.html?cid=' + cid + '&page=announcements';
 		}
