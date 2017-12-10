@@ -112,7 +112,7 @@ function getAnnouncements(cid) {
 	$('h1.page-header').text('Announcements');
 	dbResult('/announcements/', function(key, value) {
 		if (value['course'] === cid) {
-			$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br /><span style="font-size:smaller;">Submitted on <span class="announcement_date">' + new Date(value['submittedDate'] * 1000) + '</span></span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
+			$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong><br /><span style="font-size:smaller;">Submitted on <span class="announcement_date">' + new Date(value['submittedDate'] * 1000) + '</span></span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
 		}
 	}, function() {
 		// Callback to retrieving DB data
@@ -123,7 +123,7 @@ function getAssignments(cid) {
 	$('h1.page-header').text('Assignments');
 	dbResult('/assignments/', function(key, value) {
 		if (value['course'] === cid) {
-			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '</div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
+			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + cid + '&page=assignments&aid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 		}
 	}, function() {
 		// Callback to retrieving DB data
