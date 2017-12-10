@@ -126,13 +126,11 @@ function getAnnouncements(cid) {
 				$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
 			}
 		}, function() {
-			var $dates = [];
 			var announcements = $('#page-wrapper div.announcement').detach();
 			announcements.sort(function(a, b) {
 				return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text())
 			});
-			announcements.reverse();
-			$('#page-wrapper').append(announcements);
+			$('#page-wrapper').append(announcements.get().reverse());
 		});
 	}, function() {
 		// Callback to retrieving DB data
