@@ -133,7 +133,7 @@ function getAssignments(cid) {
 	dbResult('/assignments/', function(key, value) {
 		if (value['course'] === cid) {
 			var dueDate = new Date(value['dueDate'] * 1000);
-			if (new Date() > dueDate) {
+			if (new Date() < dueDate) {
 				$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + cid + '&page=assignments&aid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 			} else {
 				$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
