@@ -120,10 +120,20 @@ function getStudentCourseInfo(cid) {
 
 function getAnnouncements(cid) {
 	dbResult('/announcements/', function(key, value) {
+		console.log('key');
 		console.log(key);
+		console.log('');
+		console.log('');
+		console.log('value');
 		console.log(value);
-		dbResult('/courses/' + value['course'] + '/announcements/' + key, function(key2, value2) {
+		console.log('');
+		console.log('');
+		dbResult('/courses/' + value['course'] + '/announcements/', function(key2, value2) {
+			console.log('key2');
 			console.log(key2);
+			console.log('');
+			console.log('');
+			console.log('value2');
 			console.log(value2);
 		}, function() {
 			// Callback to retrieving DB data
