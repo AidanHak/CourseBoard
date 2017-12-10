@@ -128,12 +128,6 @@ function getAnnouncements(cid) {
 		}
 	}, function() {
 		// Callback to retrieving DB data
-/*		var announcements = $('#page-wrapper div.announcement').detach();
-		announcements.sort(function(a, b) {
-			return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text());
-		});
-		console.log(announcements);
-		$('#page-wrapper').append(announcements.get().reverse());*/
 	});
 }
 
