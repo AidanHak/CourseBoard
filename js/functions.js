@@ -412,6 +412,7 @@ function updateName(newName) {
 		displayName: newName
 	}).then(function() {
 		// Update successful
+		window.location.reload();
 	}).catch(function() {
 		// An error happened.
 	});
