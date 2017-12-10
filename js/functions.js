@@ -128,13 +128,10 @@ function getAnnouncements(cid) {
 		}, function() {
 			var $dates = [];
 			var announcements = $('#page-wrapper div.announcement').detach();
-			console.log('before');
-			console.log(announcements);
 			announcements.sort(function(a, b) {
 				return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text())
 			});
-			console.log('after');
-			console.log(announcements);
+			announcements.reverse();
 			$('#page-wrapper').append(announcements);
 		});
 	}, function() {
