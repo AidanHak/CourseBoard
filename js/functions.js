@@ -18,7 +18,7 @@ $(document).on('click', '#allcourses-table tbody td.join_course button.join_cour
 
 $(document).on('click', '#allcourses-table tbody td.join_course button.leave_course_button', function(e) {
 	e.preventDefault();
-	if (prompt('Are you sure you want to leave this course?')) {
+	if (confirm('Are you sure you want to leave this course?')) {
 		leaveCourse($(this).closest('tr').attr('class'));
 		$(this).parent().html('<button type="button" class="btn btn-primary btn-xs leave_course_button" style="text-align:center;">Join</button>');
 	}
@@ -108,44 +108,18 @@ function getStudentCourseInfo(cid) {
 	});
 }
 
-function getCourseInfo(cid) {
-	dbResult('/courses/' + cid, function(key, value) {
-/*		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="cdesc"></td></tr>');
-		}
-
-		if (key === 'title') {
-			$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + value + '</a>');
-			$('h1.page-header').text(value);
-		} else if (key === 'location') {
-			$('#allcourses-table tbody tr.' + cid + ' td.cloc').text(value);
-		} else if (key === 'days') {
-			var $days = '';
-			$.each(value, function(data) {
-				$days += data.charAt(0).toUpperCase() + data.slice(1) + ', ';
-			});
-			$days = $days.substring(0, $days.length - 2);
-			$('#allcourses-table tbody tr.' + cid + ' td.cdays').text($days);
-		} else if (key === 'description') {
-			$('#allcourses-table tbody tr.' + cid + ' td.cdesc').text(value);
-		}*/
-	}, function() {
-		// Callback to retrieving DB data
-	});
-}
-
 function getAnnouncements(cid) {
 	var anouncements = {};
 	dbResult('/courses/' + cid + '/announcements/', function(key, value) {
 		anouncements[key] = true;
 	}, function() {
-		// Callback to retrieving DB data
-		$.each(announcements, function(key, value) {
-			dbResult('/announcements/' + key, function(key, value) {
-
-			}, function() {
-
-			});
+		dbResult('/announcements/', function(key, value) {
+			console.log(key);
+			console.log(value);
+			console.log(announcements);
+			console.log(announcements[key]);
+		}, function() {
+			// Callback to retrieving DB data
 		});
 	});
 }
@@ -158,7 +132,7 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs join_course_button" style="text-align:center;">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course" style="text-align:center;"><button type="button" class="btn btn-primary btn-xs join_course_button">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
 			isStudentTakingCourse(cid);
 		}
 
