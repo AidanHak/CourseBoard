@@ -100,7 +100,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
+            <div class="row" id="allcourses-row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -180,10 +180,12 @@
 	if (location.href.indexOf('cid=') !== -1) {
 		var cid = location.href.split('cid=')[1].split('&')[0];
 		$('#side-menu #courses').after('<li id="course_options" class="active"><a href="course.html?cid=' + cid + '"><i class="fa fa-gear fa-fw"></i> Course Options<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse in"><li><a href="courses.html?cid=' + cid + '&page=announcements"><i class="fa fa-info-circle fa-fw"></i> Announcements</a></li><li><a href="courses.html?cid=' + cid + '&page=assignments"><i class="fa fa-briefcase fa-fw"></i> Assignments</a></li></ul></li>');
-		//getCourseInfo(cid);
 		if (location.href.indexOf('page=') !== -1) {
-			var page = location.href.split('page=')[1].split('&')[0];
-			getAnnouncements(cid);
+            var page = location.href.split('page=')[1].split('&')[0];
+            $('#allcourses-row').hide();
+			if (page === 'announcements') {
+                getAnnouncements(cid);
+            }
 		} else {
 			window.location.href = 'courses.html?cid=' + cid + '&page=announcements';
 		}

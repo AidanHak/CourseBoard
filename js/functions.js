@@ -123,11 +123,17 @@ function getAnnouncements(cid) {
 	dbResult('/announcements/', function(key, value) {
 		dbResult('/courses/' + value['course'] + '/announcements/', function(key2, value2) {
 			if (key === key2) {
-				$('#page-wrapper').append('<div class="row"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '</div><div class="panel-body">' + value['description'] + '</div></div></div>');
+				$('#page-wrapper').append('<div class="row"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
 			}
 		}, function() {
 			// Callback to retrieving DB data
 			// Sort DOM by submittedBy value
+			var $dates = [];
+			$('#page-wrapper div.row span.announcement_date').each(function(i) {
+				var $this = $(this);
+				$dates[i] = new Date($this.text());
+			});
+			console.log($dates);
 		});
 	}, function() {
 		// Callback to retrieving DB data
