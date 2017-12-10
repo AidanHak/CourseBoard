@@ -123,23 +123,18 @@ function getAnnouncements(cid) {
 	dbResult('/announcements/', function(key, value) {
 		dbResult('/courses/' + value['course'] + '/announcements/', function(key2, value2) {
 			if (key === key2) {
-				$('#page-wrapper').append('<div class="row"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
+				$('#page-wrapper').append('<div class="row announcement"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '<br />Submitted on <span class="announcement_date" style="font-size:smaller;">' + value['submittedDate'] + '</span></div><div class="panel-body">' + value['description'] + '</div></div></div>');
 			}
 		}, function() {
 			var $dates = [];
-			$('#page-wrapper div.row span.announcement_date').each(function(i) {
-				var $this = $(this);
-				$dates[i] = new Date($this.text());
-			});
+			var announcements = $('#page-wrapper div.announcement').detach();
 			console.log('before');
-			console.log($dates);
-			$dates.sort(function(a,b){
-				// Turn your strings into dates, and then subtract them
-				// to get a value that is either negative, positive, or zero.
-				return b - a;
+			console.log(announcements);
+			announcements.sort(function(a, b) {
+				new Date(b.find('div.announcement_date').text()) - new Date(a.find('div.announcement_date').text())
 			});
 			console.log('after');
-			console.log($dates);
+			console.log(announcements);
 		});
 	}, function() {
 		// Callback to retrieving DB data
