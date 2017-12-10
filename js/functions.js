@@ -103,7 +103,7 @@ function getStudentCourses() {
 	}, function() {
 		if ($('li#courses ul li').length > 0) {
 			$('li#courses > a').append('<span class="fa arrow"></span>');
-			$('li#courses > a').html($('li#courses > a').html().replace('Courses', 'Your Courses'));
+			//$('li#courses > a').html($('li#courses > a').html().replace('Courses', 'Your Courses'));
 			$('li#courses ul').prepend('<li><a href="courses.html">All Courses</a></li>');
 		}
 	});
