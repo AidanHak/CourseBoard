@@ -30,6 +30,7 @@ $(document).on('click', '#assignment_form button', function(e) {
 	var content = $.trim($(this).closest('form').find('textarea').val());
 	if (content !== '') {
 		submitAssignment(aid, content);
+		$('div.panel:has(#assignment_form)').before('<div class="alert alert-success">Your submission has been successfully received.</div>');
 	}
 });
 
@@ -136,7 +137,7 @@ function getAssignments(cid) {
 			if (new Date() < dueDate) {
 				$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + cid + '&page=assignments&aid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 			} else {
-				$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
+				$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-warning"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 			}
 		}
 	}, function() {
@@ -149,7 +150,7 @@ function getOneAssignment(aid, cid, uid) {
 	dbResult('/assignments/', function(key, value) {
 		if (aid === key) {
 			var content = value['students'][getUID()];
-			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '<br /><br /><form id="assignment_form"><textarea class="form-control" rows="5"></textarea><br /><button type="button" class="btn btn-default">Submit</button></form></div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
+			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-primary"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '<br /><br /><form id="assignment_form"><textarea class="form-control" rows="5"></textarea><br /><button type="button" class="btn btn-default">Submit</button></form></div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
 			if (content !== undefined) {
 				$('#assignment_form textarea').val(content);
 				$('#assignment_form').addClass('submitted');
@@ -166,7 +167,6 @@ function submitAssignment(aid, content) {
 	updates['/assignments/' + aid + '/students/' + uid] = content;
 	updates['/students/' + uid + '/assignments/' + aid] = true;
 	firebase.database().ref().update(updates);
-	alert('Your submission has been received.');
 }
 
 /*
