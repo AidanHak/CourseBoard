@@ -81,7 +81,7 @@ function dbResult(path, result, after) {
 	});
 }
 
-dbResultSorted(path, sortBy, result, after) {
+function dbResultSorted(path, sortBy, result, after) {
 	retrieveFromSorted(path, sortBy, function(data) {
 		$.each(data, function (index, item) {
 			result(index, item);
