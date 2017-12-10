@@ -27,7 +27,7 @@ $(document).on('click', '#allcourses-table tbody td.join_course button.leave_cou
 $(document).on('click', '#assignment_form button', function(e) {
 	e.preventDefault();
 	var aid = location.href.split('aid=')[1].split('&')[0];
-	var content = $.trim($(this).prev('textarea').val());
+	var content = $.trim($(this).closest('form').find('textarea').val());
 	if (content !== '') {
 		submitAssignment(aid, content);
 	}
