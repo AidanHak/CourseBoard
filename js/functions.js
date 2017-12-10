@@ -119,24 +119,15 @@ function getStudentCourseInfo(cid) {
 }*/
 
 function getAnnouncements(cid) {
+	$('h1.page-header').text('Announcements');
 	dbResult('/announcements/', function(key, value) {
-		console.log('key');
-		console.log(key);
-		console.log('');
-		console.log('');
-		console.log('value');
-		console.log(value);
-		console.log('');
-		console.log('');
 		dbResult('/courses/' + value['course'] + '/announcements/', function(key2, value2) {
-			console.log('key2');
-			console.log(key2);
-			console.log('');
-			console.log('');
-			console.log('value2');
-			console.log(value2);
+			if (key === key2) {
+				$('#page-wrapper').append('<div class="row"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading">' + value['title'] + '</div><div class="panel-body">' + value['description'] + '</div></div></div>');
+			}
 		}, function() {
 			// Callback to retrieving DB data
+			// Sort DOM by submittedBy value
 		});
 	}, function() {
 		// Callback to retrieving DB data
