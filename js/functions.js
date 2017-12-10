@@ -10,10 +10,14 @@ $('#signout').click(function(e) {
 	signOutUser();
 });
 
-$(document).on('click', '#allcourses-table tbody td.join_course button', function(e) {
+$(document).on('click', '#allcourses-table tbody td.join_course button.join_course_button', function(e) {
 	e.preventDefault();
 	joinCourse($(this).closest('tr').attr('class'));
-	$(this).remove();
+});
+
+$(document).on('click', '#allcourses-table tbody td.join_course button.leave_course_button', function(e) {
+	e.preventDefault();
+	leaveCourse($(this).closest('tr').attr('class'));
 });
 
 function initialCheck() {
@@ -150,7 +154,7 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs join_course_button">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
 			isStudentTakingCourse(cid);
 		}
 
@@ -188,6 +192,14 @@ function joinCourse(cid) {
 	firebase.database().ref().update(updates);
 }
 
+function leaveCourse(cid) {
+	var uid = getUID();
+	var updates = {};
+	updates['/courses/' + cid + '/students/' + uid] = null;
+	updates['/students/' + uid + '/courses/' + cid] = null;
+	firebase.database().ref().update(updates);
+}
+
 function createAssignment(cid, aid) {
 	var updates = {};
 	updates['courses/' + cid + '/assignments/' + aid] = true;
@@ -203,7 +215,7 @@ function isStudentTakingCourse(cid) {
 	var uid = getUID();
 	dbResult('/courses/' + cid + '/students/', function(key, value) {
 		if (key === uid) {
-			$('#allcourses-table tbody tr.' + cid + ' td.join_course button').remove();
+			$('#allcourses-table tbody tr.' + cid + ' td.join_course').html('<button type="button" class="btn btn-danger btn-xs leave_course_button">Leave</button>');
 		}
 	}, function() {
 		// Callback to retrieving DB data
