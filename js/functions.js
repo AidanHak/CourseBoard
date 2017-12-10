@@ -131,7 +131,7 @@ function getAnnouncements(cid) {
 			console.log('before');
 			console.log(announcements);
 			announcements.sort(function(a, b) {
-				return new Date(b.find('div.announcement_date').text()) - new Date(a.find('div.announcement_date').text())
+				return new Date($(b).find('div.announcement_date').text()) - new Date($(a).find('div.announcement_date').text())
 			});
 			console.log('after');
 			console.log(announcements);
