@@ -63,26 +63,8 @@ function retrieveFrom(path, callback, after) {
 	});
 }
 
-function retrieveFromSorted(path, sortBy, callback, after) {
-	firebase.database().ref(path).orderByChild(sortBy).once('child_added', function(snap) {
-		callback(snap.val());
-	}).then(function() {
-		after();
-	});
-}
-
 function dbResult(path, result, after) {
 	retrieveFrom(path, function(data) {
-		$.each(data, function (index, item) {
-			result(index, item);
-		});
-	}, function() {
-		after();
-	});
-}
-
-function dbResultSorted(path, sortBy, result, after) {
-	retrieveFromSorted(path, sortBy, function(data) {
 		$.each(data, function (index, item) {
 			result(index, item);
 		});
@@ -138,7 +120,7 @@ function getStudentCourseInfo(cid) {
 
 function getAnnouncements(cid) {
 	$('h1.page-header').text('Announcements');
-	dbResultSorted('/announcements/', 'submittedDate', function(key, value) {
+	dbResult('/announcements/', function(key, value) {
 		console.log(cid);
 		console.log(value['course']);
 		if (value['course'] === cid) {
