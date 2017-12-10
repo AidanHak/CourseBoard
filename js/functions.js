@@ -108,19 +108,24 @@ function getStudentCourseInfo(cid) {
 	});
 }
 
-function getAnnouncements(cid) {
+function getCourseAnnouncements(cid) {
 	var anouncements = {};
 	dbResult('/courses/' + cid + '/announcements/', function(key, value) {
 		anouncements[key] = true;
 	}, function() {
-		dbResult('/announcements/', function(key, value) {
-			console.log(key);
-			console.log(value);
-			console.log(announcements);
-			console.log(announcements[key]);
-		}, function() {
-			// Callback to retrieving DB data
-		});
+		console.log(announcements);
+		//getAnnouncements(announcements);
+	});
+}
+
+function getAnnouncements(announcements) {
+	dbResult('/announcements/', function(key, value) {
+		console.log(key);
+		console.log(value);
+		console.log(announcements);
+		console.log(announcements[key]);
+	}, function() {
+		// Callback to retrieving DB data
 	});
 }
 
