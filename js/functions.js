@@ -24,6 +24,15 @@ $(document).on('click', '#allcourses-table tbody td.join_course button.leave_cou
 	}
 });
 
+$(document).on('click', '#assignment_form button', function(e) {
+	e.preventDefault();
+	var aid = location.href.split('aid=')[1].split('&')[0];
+	var content = $.trim($(this).prev('textarea').val());
+	if (content !== '') {
+		submitAssignment(aid, content);
+	}
+});
+
 function initialCheck() {
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
@@ -130,13 +139,23 @@ function getAssignments(cid) {
 	});
 }
 
-function getOneAssignment(aid) {
-	dbResult('/assignments/' + aid, function(key, value) {
-console.log(key);
-console.log(value);
+function getOneAssignment(aid, cid) {
+	dbResult('/assignments/', function(key, value) {
+		if (aid === key) {
+			$('#page-wrapper').append('<div class="row assignment"><div class="col-lg-12"><div class="panel panel-default"><div class="panel-heading"><strong>' + value['title'] + '</strong></div><div class="panel-body">' + value['description'] + '<br /><form id="assignment_form"><textarea class="form-control" rows="5"></textarea><button type="button" class="btn btn-default">Submit</button></form></div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div></div>');
+			console.log(value);
+		}
 	}, function() {
 		// Callback to retrieving DB data
 	});
+}
+
+function submitAssignment(aid, content) {
+	var uid = getUID();
+	var updates = {};
+	updates['/assignments/' + aid + '/students/' + uid] = content;
+	updates['/students/' + uid + '/assignments/' + aid] = true;
+	firebase.database().ref().update(updates);
 }
 
 /*

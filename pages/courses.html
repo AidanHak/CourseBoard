@@ -186,10 +186,11 @@
 			if (page === 'announcements') {
                 getAnnouncements(cid);
             } else if (page === 'assignments') {
-                getAssignments(cid);
                 if (location.href.indexOf('aid=') !== -1) {
                     var aid = location.href.split('aid=')[1].split('&')[0];
-
+                    getOneAssignment(aid);
+                } else {
+                    getAssignments(aid, cid);
                 }
             }
 		} else {
