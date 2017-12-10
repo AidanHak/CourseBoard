@@ -13,11 +13,15 @@ $('#signout').click(function(e) {
 $(document).on('click', '#allcourses-table tbody td.join_course button.join_course_button', function(e) {
 	e.preventDefault();
 	joinCourse($(this).closest('tr').attr('class'));
+	$(this).parent().html('<button type="button" class="btn btn-danger btn-xs leave_course_button" style="text-align:center;">Leave</button>');
 });
 
 $(document).on('click', '#allcourses-table tbody td.join_course button.leave_course_button', function(e) {
 	e.preventDefault();
-	leaveCourse($(this).closest('tr').attr('class'));
+	if (prompt('Are you sure you want to leave this course?')) {
+		leaveCourse($(this).closest('tr').attr('class'));
+		$(this).parent().html('<button type="button" class="btn btn-primary btn-xs leave_course_button" style="text-align:center;">Join</button>');
+	}
 });
 
 function initialCheck() {
@@ -154,7 +158,7 @@ function getAllCoursesInfo() {
 	dbResult('/courses/', function(key, value) {
 		var cid = key;
 		if ($('#allcourses-table tbody tr.' + cid).length === 0) {
-			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs join_course_button">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
+			$('#allcourses-table tbody').append('<tr class="' + cid + '"><td class="join_course"><button type="button" class="btn btn-primary btn-xs join_course_button" style="text-align:center;">Join</button></td><td class="ctitle"></td><td class="cloc"></td><td class="cdays"></td><td class="starttime"></td><td class="endtime"></td><td class="cdesc"></td></tr>');
 			isStudentTakingCourse(cid);
 		}
 
@@ -215,7 +219,7 @@ function isStudentTakingCourse(cid) {
 	var uid = getUID();
 	dbResult('/courses/' + cid + '/students/', function(key, value) {
 		if (key === uid) {
-			$('#allcourses-table tbody tr.' + cid + ' td.join_course').html('<button type="button" class="btn btn-danger btn-xs leave_course_button">Leave</button>');
+			$('#allcourses-table tbody tr.' + cid + ' td.join_course').html('<button type="button" class="btn btn-danger btn-xs leave_course_button" style="text-align:center;">Leave</button>');
 		}
 	}, function() {
 		// Callback to retrieving DB data
