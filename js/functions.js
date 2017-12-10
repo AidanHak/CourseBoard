@@ -135,6 +135,7 @@ function getAnnouncements(cid) {
 			});
 			console.log('after');
 			console.log(announcements);
+			$('#page-wrapper').append(announcements);
 		});
 	}, function() {
 		// Callback to retrieving DB data
