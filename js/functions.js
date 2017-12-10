@@ -158,6 +158,17 @@ function getAssignments(cid) {
 	});
 }
 
+function getDueAssignments() {
+	dbResult('/assignments/', function(key, value) {
+		var dueDate = new Date(value['dueDate'] * 1000);
+		if (new Date() < dueDate) {
+			$('#upcomingAssignments div.panel-body').append('<div class="panel-group assignment"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + value['course'] + '&page=assignments&aid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">Due on <span class="assignment_duedate">' + new Date(value['dueDate'] * 1000) + '</span></span></div></div>');
+		}
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
 function getOneAssignment(aid, cid) {
 	$('h1.page-header').text('Assignments');
 	dbResult('/assignments/', function(key, value) {
