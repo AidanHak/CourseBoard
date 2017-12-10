@@ -127,16 +127,14 @@ function getAnnouncements(cid) {
 			}
 		}, function() {
 			// Callback to retrieving DB data
-			// Sort DOM by submittedBy value
-			var $dates = [];
-			$('#page-wrapper div.row span.announcement_date').each(function(i) {
-				var $this = $(this);
-				$dates[i] = new Date($this.text());
-			});
-			console.log($dates);
 		});
 	}, function() {
-		// Callback to retrieving DB data
+		var $dates = [];
+		$('#page-wrapper div.row span.announcement_date').each(function(i) {
+			var $this = $(this);
+			$dates[i] = new Date($this.text());
+		});
+		console.log($dates);
 	});
 }
 
