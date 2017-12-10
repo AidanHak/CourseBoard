@@ -20,7 +20,7 @@ $(document).on('click', '#allcourses-table tbody td.join_course button.leave_cou
 	e.preventDefault();
 	if (confirm('Are you sure you want to leave this course?')) {
 		leaveCourse($(this).closest('tr').attr('class'));
-		$(this).parent().html('<button type="button" class="btn btn-primary btn-xs leave_course_button" style="text-align:center;">Join</button>');
+		$(this).parent().html('<button type="button" class="btn btn-primary btn-xs join_course_button" style="text-align:center;">Join</button>');
 	}
 });
 
