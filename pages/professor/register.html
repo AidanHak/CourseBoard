@@ -95,7 +95,7 @@
       };
       firebase.initializeApp(config);
     </script>
-    <script src="../js/functions.js"></script>
+    <script src="../../js/functions.js"></script>
 	<script>
     var minPassword = 8;
     if (window.location.href.indexOf('?retry=') !== -1) {
@@ -120,7 +120,7 @@
         var $pw = $form.find('input[name="password"]').val();
         if ($pw === $form.find('input[name="confirmpassword"]').val() && $.trim($pw) !== '') {
             if ($pw.length >= minPassword) {
-                createNewStudent($email, $pw, $name);
+                createNewProfessor($email, $pw, $name);
             } else {
                 retry('shortpw');
             }

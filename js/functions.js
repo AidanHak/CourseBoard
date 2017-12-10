@@ -278,6 +278,35 @@ function createNewStudent(email, password, name) {
 }
 
 /*
+ ** Helper function to:
+ ** createNewProfessor
+ */
+function writeProfessorData() {
+	firebase.database().ref('professors/' + getUID()).set({
+		email: firebase.auth().currentUser.email,
+		name: firebase.auth().currentUser.displayName
+	});
+}
+
+/*
+ ** Function purpose:
+ ** Registration - register new professor
+ ** register.html
+ **
+ ** Required input:
+ ** Email, password, name
+ */
+function createNewProfessor(email, password, name) {
+	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		alert(errorMessage);
+	});
+	writeProfessorData();
+}
+
+/*
  ** Function purpose:
  ** Login - authenticate existing user (student / professor)
  ** login.html
