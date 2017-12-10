@@ -347,7 +347,7 @@ function signOutUser() {
 	firebase.auth().signOut().then(function() {
 		// Sign-out successful.
 		// Redirect to login or main page.
-		window.location.href = 'login.html?logged_out';
+		// Performed in onAuthStateChanged (in initialCheck())
 	}).catch(function(error) {
 		// An error happened.
 	});
