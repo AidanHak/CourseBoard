@@ -187,6 +187,10 @@
                 getAnnouncements(cid);
             } else if (page === 'assignments') {
                 getAssignments(cid);
+                if (location.href.indexOf('aid=') !== -1) {
+                    var aid = location.href.split('aid=')[1].split('&')[0];
+
+                }
             }
 		} else {
 			window.location.href = 'courses.html?cid=' + cid + '&page=announcements';

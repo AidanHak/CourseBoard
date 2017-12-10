@@ -130,6 +130,15 @@ function getAssignments(cid) {
 	});
 }
 
+function getOneAssignment(aid) {
+	dbResult('/assignments/' + aid, function(key, value) {
+console.log(key);
+console.log(value);
+	}, function() {
+		// Callback to retrieving DB data
+	});
+}
+
 /*
  ** Helper function to:
  ** getAllCourses
