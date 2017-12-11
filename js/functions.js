@@ -227,7 +227,7 @@ function getTodayCourses() {
 		var today = new Date();
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var dayName = days[today.getDay()];
-		if (value['days'][dayName]) {
+		if (value['days'][dayName.toLowerCase()]) {
 			$('#todaySchedule > div.panel-body').append('<div class="panel-group course"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">From ' + value['startTime'] + ' to ' + value['endTime'] + '</span></div></div>');
 		}
 	}, function() {
