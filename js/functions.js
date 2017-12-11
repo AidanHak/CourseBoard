@@ -231,7 +231,9 @@ function getTodayCourses() {
 			$('#todaySchedule > div.panel-body').append('<div class="panel-group course"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">From ' + value['startTime'] + ' to ' + value['endTime'] + '</span></div></div>');
 		}
 	}, function() {
-
+		if ($('#todaySchedule div.panel-body').is(':empty')) {
+			$('#todaySchedule').parent().remove();
+		}
 	});
 }
 
