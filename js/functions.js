@@ -1,4 +1,4 @@
-var $uid = getUID();
+var $uid = '';
 initialCheck();
 
 $('#forgotpw').click(function(e) {
@@ -51,6 +51,7 @@ function initialCheck() {
 
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
+			$uid = getUID();
 			// User is signed in and currentUser will no longer return null.
 			if (location.href.indexOf('login.html') !== -1 || location.href.indexOf('register.html') !== -1) {
 				window.location.href = 'index.html?logged_in';
