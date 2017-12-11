@@ -197,6 +197,16 @@ function getAllCourses() {
 		}
 
 		$.each(value, function(courseAttr, val) {
+			if (courseAttr === 'endTime' || courseAttr === 'startTime') {
+				var hours = parseInt(val.split(':')[0], 10);
+				var pm = "";
+				if (hours > 12) {
+					pm = "PM";
+				}
+				hours = hours % 12;
+				val = hours + ':' + val.split(':')[1] + pm;
+			}
+
 			if (courseAttr === 'title') {
 				$('#allcourses-table tbody tr.' + cid + ' td.ctitle').html('<a href="courses.html?cid=' + cid + '">' + val + '</a>');
 				$('h1.page-header').text('All Courses');
