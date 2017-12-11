@@ -222,8 +222,7 @@ function getAllCourses() {
 	});
 }
 
-function getTodayCourses() {
-	var uid = getUID();
+function getTodayCourses(uid) {
 	dbResult('/courses/', function(key, value) {
 		var today = new Date();
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
