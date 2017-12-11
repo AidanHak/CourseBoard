@@ -1,3 +1,4 @@
+var $uid = getUID();
 initialCheck();
 
 $('#forgotpw').click(function(e) {
@@ -207,7 +208,7 @@ function getAllCourses() {
 				if (hours === 0) {
 					hours = 12;
 				}
-				val = hours + ':' + val.split(':')[1] + pm;
+				val = hours + ':' + val.split(':')[1] + ' ' + pm;
 			}
 
 			if (courseAttr === 'title') {
@@ -235,13 +236,13 @@ function getAllCourses() {
 	});
 }
 
-function getTodayCourses(uid) {
+function getTodayCourses() {
 	dbResult('/courses/', function(key, value) {
 		var today = new Date();
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var dayName = days[today.getDay()];
 		if(value['students'] !== undefined && value['days'] !== undefined) {
-			if (value['days'][dayName.toLowerCase()] && value['students'][uid]) {
+			if (value['days'][dayName.toLowerCase()] && value['students'][$uid]) {
 				$('#todaySchedule > div.panel-body').append('<div class="panel-group course"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">From ' + value['startTime'] + ' to ' + value['endTime'] + '</span></div></div>');
 			}
 		}
