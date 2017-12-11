@@ -199,11 +199,14 @@ function getAllCourses() {
 		$.each(value, function(courseAttr, val) {
 			if (courseAttr === 'endTime' || courseAttr === 'startTime') {
 				var hours = parseInt(val.split(':')[0], 10);
-				var pm = "";
+				var pm = "AM";
 				if (hours > 12) {
 					pm = "PM";
 				}
 				hours = hours % 12;
+				if (hours === 0) {
+					hours = 12;
+				}
 				val = hours + ':' + val.split(':')[1] + pm;
 			}
 
