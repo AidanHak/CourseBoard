@@ -200,16 +200,7 @@ function getAllCourses() {
 
 		$.each(value, function(courseAttr, val) {
 			if (courseAttr === 'endTime' || courseAttr === 'startTime') {
-				var hours = parseInt(val.split(':')[0], 10);
-				var pm = "AM";
-				if (hours >= 12) {
-					pm = "PM";
-				}
-				hours = hours % 12;
-				if (hours === 0) {
-					hours = 12;
-				}
-				val = hours + ':' + val.split(':')[1] + ' ' + pm;
+				val = convertHours(val);
 			}
 
 			if (courseAttr === 'title') {
@@ -244,7 +235,9 @@ function getTodayCourses() {
 		var dayName = days[today.getDay()];
 		if(value['students'] !== undefined && value['days'] !== undefined) {
 			if (value['days'][dayName.toLowerCase()] && value['students'][$uid]) {
-				$('#todaySchedule > div.panel-body').append('<div class="panel-group course"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">From ' + value['startTime'] + ' to ' + value['endTime'] + '</span></div></div>');
+				startTime = convertHours(value['startTime']);
+				endTime = convertHours(value['endTime']);
+				$('#todaySchedule > div.panel-body').append('<div class="panel-group course"><div class="panel panel-default"><div class="panel-heading"><strong><a href="courses.html?cid=' + key + '">' + value['title'] + '</a></strong></div><div class="panel-body">' + value['description'] + '</div><div class="panel-footer"><span style="font-size:smaller;">From ' + startTime + ' to ' + endTime + '</span></div></div>');
 			}
 		}
 	}, function() {
@@ -447,4 +440,18 @@ function updateName(newName) {
 	}).catch(function() {
 		// An error happened.
 	});
+}
+
+function convertHours($time) {
+	var hours = parseInt($time.split(':')[0], 10);
+	var pm = "AM";
+	if (hours >= 12) {
+		pm = "PM";
+	}
+	hours = hours % 12;
+	if (hours === 0) {
+		hours = 12;
+	}
+	$time = hours + ':' + $time.split(':')[1] + ' ' + pm;
+	return $time;
 }
